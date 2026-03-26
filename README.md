@@ -1,39 +1,46 @@
-# SAP O2C LangGraph Multi-Agent System
+# SAP O2C Graph-Based Data Modeling & Query System
 
-i have created LangGraph agent system for Graph-Based Data Modeling and Query System intelligent, interactive knowledge graph agent for analyzing SAP Order-to-Cash (O2C) processes using LangGraph Agentic Framework due to , Groq, and NetworkX.
+An intelligent, interactive knowledge graph system for SAP Order-to-Cash (O2C) processes, combining **graph-based data modeling** with a **LangGraph-powered natural language interface**.
 
-##  Overview
+##  Problem Statement
 
-This system transforms raw SAP O2C transactional data into an interactive knowledge graph, user can ask que in  natural language queries and agent give intelligent analysis of your order-to-cash process. this is multi-agent architecture that combines graph analytics, LLM reasoning, semantic search, conversation memory, and streaming responses.
+In real-world SAP ERP environments, business-critical data is fragmented across 19+ tables — sales orders, deliveries, invoices, payments — with no unified view of how a single transaction flows end-to-end. Analysts must manually join tables and trace foreign key chains to answer questions that should be trivial: *"Was this order delivered and billed?"* or *"Which customer has the most cancelled invoices?"*
 
-## Problem Statement
+**This system solves that by:**
+- Unifying fragmented SAP O2C data into a **property graph**
+- Placing an **LLM-powered natural language interface** on top
+- Enabling business users to explore and interrogate data without writing SQL
 
-In real-world SAP ERP environments, business-critical data is fragmented across 19 tables — sales orders, deliveries, invoices, payments  with no unified view of how a single transaction flows end-to-end. Analysts must manually join tables and trace FK chains to answer questions that should be trivial: "Was this order delivered and billed?" or "Which customer has the most cancelled invoices?"
+---
 
-This system solves that by unifying the fragmented SAP O2C (Order-to-Cash) data into a property graph and placing an LLM-powered natural language query interface on top of it, enabling business users to explore and interrogate the data without writing a single line of SQL.
+##  Functional Requirements Met
 
+### 1. Graph Construction ✓
 
-##  Key Features
+**Node Types (Business Entities):**
+| Node Type | Description | Example |
+|-----------|-------------|---------|
+| **Customer** | Business partner placing orders | `C_1000234` |
+| **SalesOrder** | Header-level order information | `SO_740506` |
+| **OrderItem** | Line items within orders | `SOI_740506_10` |
+| **Product** | Materials being sold | `P_MAT-001` |
+| **Delivery** | Outbound shipments | `DEL_80737721` |
+| **BillingDocument** | Invoices created | `BIL_90504248` |
+| **Payment** | Received payments | `PAY_123456` |
+| **JournalEntry** | Accounting entries | `JNL_789012` |
+| **Address** | Customer locations | `ADDR_C_1000234_1` |
+| **Plant** | Shipping locations | `PLANT_1000` |
 
-- **Streaming LLM Responses** – Real-time token streaming via Groq
-- **Conversation Memory** – Remembers last 5 turns for contextual conversations
-- **Semantic Search** – Vector-based node search using sentence-transformers
-- **Graph Clustering** – Automatically segments complete vs broken O2C flows
-- **Rich Visualizations** – Matplotlib + interactive Pyvis HTML graphs
-- **Intelligent Routing** – Smart intent detection and tool selection
-- **Comprehensive O2C Analytics**:
-  - Full order tracing (SO → Delivery → Billing → Payment → Journal)
-  - Broken flow detection
-  - Customer revenue analysis
-  - Product billing ranking
-  - Financial & cancellation summaries
-  - Dashboard with KPIs
+**Edge Types (Relationships):**
+| Edge | Source → Target | Business Meaning |
+|------|-----------------|------------------|
+| `PLACED_ORDER` | Customer → SalesOrder | Customer created order |
+| `HAS_ITEM` | SalesOrder → OrderItem | Order contains line item |
+| `REFERENCES_PRODUCT` | OrderItem → Product | Item is for specific product |
+| `HAS_DELIVERY` | SalesOrder → Delivery | Order was shipped |
+| `SHIPS_FROM` | Delivery → Plant | Delivery originates from plant |
+| `BILLED_BY` | SalesOrder → BillingDocument | Order was invoiced |
+| `PAID_VIA` | BillingDocument → Payment | Invoice was paid |
+| `HAS_JOURNAL` | Payment → JournalEntry | Payment recorded in accounting |
+| `HAS_ADDRESS` | Customer → Address | Customer has location |
 
-##  Tech Stack
-
-- **LLM**: `openai/gpt-oss-20b` via Groq
-- **Framework**: LangGraph 
-- **Graph**: NetworkX + Pyvis
-- **Embeddings**: sentence-transformers (`all-MiniLM-L6-v2`)
-- **Visualization**: Matplotlib + Pyvis
-- **Data**: SAP O2C transactional tables (JSONL format)
