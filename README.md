@@ -29,7 +29,7 @@ This system solves that by unifying the fragmented SAP O2C (Order-to-Cash) data 
   - Financial & cancellation summaries
   - Dashboard with KPIs
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **LLM**: `openai/gpt-oss-20b` via Groq
 - **Framework**: LangGraph 
