@@ -17,7 +17,7 @@ In real-world SAP ERP environments, business-critical data is fragmented across 
 
 ## Functional Requirements Met
 
-### 1. Graph Construction ✓
+### 1. Graph Construction 
 
 **Node Types (Business Entities):**
 
