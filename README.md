@@ -56,7 +56,7 @@ In real-world SAP ERP environments, business-critical data is fragmented across 
 
 ---
 
-### 2. Graph Visualization ✓
+### 2. Graph Visualization 
 
 **Interactive Exploration Features:**
 
@@ -119,7 +119,7 @@ NetworkX beats specialized graph databases (Neo4j, ArangoDB) because:
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
